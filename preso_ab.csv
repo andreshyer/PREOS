@@ -1,10 +1,20 @@
-compound,a (Pa*m^6*mol^-2),b [(m^3/mol)*10^5]
-oxygen,0.1381,3.184
-nitrogen,0.1368,3.864
-water,0.5542,3.051
-methane,0.2303,4.306
-carbon monoxide,0.1473,3.951
-carbon dioxide,0.3658,4.286
-ammonia,0.4253,3.737
-hydrogen,0.0248,2.66
-helium,0.00346,2.376
+compound,Tc (K),Pc (MPa),w
+benzene,,,
+n-butane,,,
+isobutane,,,
+carbon dioxide,304.2,7.376,0.225
+carbon monoxide,132.9,3.496,0.049
+n-decane,,,
+ethane,,,
+ethylene,,,
+n-heptane,,,
+n-hexane,,,
+hydrogen sulfide,,,
+methane,190.6,4.6,0.008
+nitrogen,126.2,3.394,0.04
+n-octane,,,
+n-pentane,,,
+isopentane,,,
+propane,,,
+propylene,,,
+sulfur dioxide,,,
