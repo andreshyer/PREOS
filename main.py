@@ -289,9 +289,9 @@ class PendRob:
 
         Also, the Z value used should from the vapor phase, and not the liquid phase
 
-        :param pressure:
-        :param temperature:
-        :return:
+        :param pressure: pressure in bar
+        :param temperature: temperature in C
+        :return: fugactiy in bar
         """
 
         self.calculate_Z(pressure, temperature)
@@ -370,6 +370,6 @@ compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
 # compounds = {'ethane': 0.5, 'n-butane': 0.5}
 
 calculator = PendRob(compounds)
-calculator.calculate_fv(pressure=1, temperature=100)
+calculator.calculate_fv(pressure=25, temperature=100)
 print(calculator.z_mix)
 print(calculator.fv)
