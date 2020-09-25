@@ -376,6 +376,7 @@ class PendRob:
             row.update(fv_dict_edited)
             data.append(row)
         df = pd.DataFrame(data)
+        df = round(df, 4)
         if file is not None:
             df.to_csv(file, index=False)
         return df
