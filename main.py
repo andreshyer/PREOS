@@ -364,3 +364,24 @@ class PendRob:
             Aij = aij*self.pressure/((self.R*self.temperature)**2)
             sum_yj_Aij += yj*Aij
         return sum_yj_Aij
+
+    def generate_table_for_fv(self, pressures, temperature, file=None):
+        data = []
+        for pressure in pressures:
+            self.calculate_fv(pressure, temperature)
+            row = {'Pressure (bar)': pressure, 'Z': self.__pull_z_value__(self.z_mix, 'vapor')}
+            fv_dict_edited = {}
+            for compound, value in self.fv.items():
+                fv_dict_edited[f'Vapor Fugacity of {compound}'] = value
+            row.update(fv_dict_edited)
+            data.append(row)
+        df = pd.DataFrame(data)
+        if file is not None:
+            df.to_csv(file, index=False)
+        return df
+
+
+compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
+calculator = PendRob(compounds)
+calculator.generate_table_for_fv(pressures=[1, 5, 15], temperature=100, file='output.csv')
+
