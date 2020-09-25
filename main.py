@@ -57,6 +57,7 @@ class PendRob:
         self.pressure = np.nan
         self.temperature = np.nan
         self.fv = dict(zip(self.compounds.keys(), [np.nan] * len(self.compounds)))
+        self.V = {}
 
     def __calculate_a_b__(self, compound):
 
@@ -250,7 +251,10 @@ class PendRob:
             roots = roots[roots > 0]
             roots = {'vapor': max(roots), 'liquid': min(roots)}
         elif len(roots) == 1:
-            roots = {'single state': roots[0]}
+            root = roots[0]
+            if root < 0:
+                raise ValueError("No roots for Z found at given conditions")
+            roots = {'single state': root}
         elif len(roots) == 0:
             raise ValueError("No roots for Z found at given conditions")
         else:
@@ -267,11 +271,9 @@ class PendRob:
         :return: molar volume in m^3/mol for mixture at conditions given
         """
 
-        all_z = self.calculate_Z(pressure, temperature)
-        V = {}
-        for state, z in all_z.items():
-            V[state] = z * self.R * self.temperature / self.pressure
-        return V
+        self.calculate_Z(pressure, temperature)
+        for state, z in self.z_mix.items():
+            self.V[state] = z * self.R * self.temperature / self.pressure
 
     def calculate_fv(self, pressure, temperature):
 
@@ -362,14 +364,3 @@ class PendRob:
             Aij = aij*self.pressure/((self.R*self.temperature)**2)
             sum_yj_Aij += yj*Aij
         return sum_yj_Aij
-
-
-# Gather compounds, make sure they are correct...
-compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
-# compounds = {'oxygen': 1.0}
-# compounds = {'ethane': 0.5, 'n-butane': 0.5}
-
-calculator = PendRob(compounds)
-calculator.calculate_fv(pressure=25, temperature=100)
-print(calculator.z_mix)
-print(calculator.fv)
