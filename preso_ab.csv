@@ -1,20 +1,21 @@
 compound,Tc (K),Pc (MPa),w
-benzene,,,
-n-butane,,,
-isobutane,,,
+benzene,562.1,4.894,0.212
+n-butane,425.2,3.8,0.193
+isobutane,408.1,3.648,0.176
 carbon dioxide,304.2,7.376,0.225
 carbon monoxide,132.9,3.496,0.049
-n-decane,,,
-ethane,,,
-ethylene,,,
-n-heptane,,,
-n-hexane,,,
-hydrogen sulfide,,,
+n-decane,617.6,2.108,0.49
+ethane,305.4,4.884,0.098
+ethylene,282.4,5.036,0.085
+n-heptane,540.2,2.736,0.351
+n-hexane,507.4,2.969,0.296
+hydrogen sulfide,373.2,8.942,0.1
 methane,190.6,4.6,0.008
 nitrogen,126.2,3.394,0.04
-n-octane,,,
-n-pentane,,,
-isopentane,,,
-propane,,,
-propylene,,,
-sulfur dioxide,,,
+n-octane,568.8,2.482,0.394
+n-pentane,469.6,3.374,0.251
+isopentane,460.4,3.384,0.227
+propane,369.8,4.246,0.152
+propylene,365,4.62,0.148
+sulfur dioxide,430.8,7.883,0.251
+oxygen,154.6,5.046,0.021
