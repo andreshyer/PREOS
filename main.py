@@ -380,9 +380,3 @@ class PendRob:
         if file is not None:
             df.to_csv(file, index=False)
         return df
-
-
-compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
-calculator = PendRob(compounds)
-calculator.generate_table_for_fv(pressures=[1, 5, 15], temperature=100, file='output.csv')
-
