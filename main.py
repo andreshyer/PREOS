@@ -220,8 +220,7 @@ class PendRob:
         v = -(A * B) + B ** 2 + B ** 3
         return u, w, v
 
-    @staticmethod
-    def __calculate_z_roots__(u, w, v):
+    def __calculate_z_roots__(self, u, w, v):
 
         """
         This function is a bit more complicated than the other equations in terms of reasoning for operations.
@@ -253,10 +252,10 @@ class PendRob:
         elif len(roots) == 1:
             root = roots[0]
             if root < 0:
-                raise ValueError("No roots for Z found at given conditions")
+                raise ValueError(f'No roots found at {self.temperature-273.15} C and {self.pressure * 10**-5} bar')
             roots = {'single state': root}
         elif len(roots) == 0:
-            raise ValueError("No roots for Z found at given conditions")
+            raise ValueError(f'No roots found at {self.temperature-273.15} C and {self.pressure * 10**-5} bar')
         else:
             raise Exception("Something broke, there should not be only two real roots")
         return roots
