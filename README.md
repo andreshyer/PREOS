@@ -1,15 +1,15 @@
 ## Peng-Robinson Equation of State Solver
 
 This script is meant to be able to solve primarly the partial vapor fugacities of
-compound in a mixture using the PREOS and equations found in "Chemical, Biochemical,
+the compounds in a mixture using the PREOS and equations found in "Chemical, Biochemical,
 and Engineering Thermodynamics" by Stanley I. Sandler. 
 
 This solver can also solve the Z and molar volumes of a mixture both in vapor 
 and liquid phase. 
 
 This script was made for a project in CLSE 305 at VCU, if someone in the future finds
-this script, please do not copy it. This was put on GitHub for anyone wanting to use
-the PREOS easily can do so.
+this script, please do not copy it. This was put on GitHub so anyone wanting to use
+the PREOS can easily do so.
 
 ## Solving for Z of a single component
     compounds = {'oxygen': 1.0}
