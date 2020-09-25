@@ -10,6 +10,14 @@ if __name__ == '__main__':
     print(calculator.z_mix)
     print()
 
+    # Calculate Z for a mixture
+    compounds = {'ethane': 0.5, 'n-butane': 0.5}
+    calculator = PendRob(compounds)
+    calculator.calculate_Z(pressure=1, temperature=100)
+    print(compounds)
+    print(calculator.z_mix)
+    print()
+
     # Calculate molar volume of mixture
     compounds = {'ethane': 0.5, 'n-butane': 0.5}
     calculator = PendRob(compounds)
