@@ -97,6 +97,7 @@ class PendRob:
             b_mix += y1 * self.b_data[compound]
             for sub_compound, y2 in self.compounds.items():
                 k = self.__fetch_kij__(compound, sub_compound)
+                print(compound, sub_compound, k)
                 a1 = self.a_data[compound]
                 a2 = self.a_data[sub_compound]
                 a_mix += (y1*y2) * (1-k) * sqrt(a1*a2)
@@ -371,7 +372,7 @@ class PendRob:
             row = {'Pressure (bar)': pressure, 'Z': self.__pull_z_value__(self.z_mix, 'vapor')}
             fv_dict_edited = {}
             for compound, value in self.fv.items():
-                fv_dict_edited[f'Vapor Fugacity of {compound}'] = value
+                fv_dict_edited[f'Vapor Fugacity of {compound} (bar)'] = value
             row.update(fv_dict_edited)
             data.append(row)
         df = pd.DataFrame(data)
