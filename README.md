@@ -23,28 +23,28 @@ the PREOS can easily do so.
     calculator = PendRob(compounds)
     calculator.calculate_Z(pressure=1, temperature=100)
     print(calculator.z_mix)
-    >>> {'vapor': 0.9912607006581391, 'liquid': 0.08645540842653841}
+    >>> {'single state': 0.9913218856617976}
 
 ## Solving for molar volume of a mixture
     compounds = {'ethane': 0.5, 'n-butane': 0.5}
     calculator = PendRob(compounds)
     calculator.calculate_V(pressure=2, temperature=100)
     print(calculator.V)
-    >>> {'vapor': 0.015237604385571256, 'liquid': 0.001938170603008456}
+    >>> {'single state': 0.015241545952714833}
    
 ## Solving for partial vapor fugacities of compounds in mixture
     compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
     calculator = PendRob(compounds)
     calculator.calculate_fv(pressure=2, temperature=100)
     print(calculator.fv)
-    >>> {'methane': 1.3077096361812484, 'ethane': 0.4032211641428493, 'propane': 0.3027229210121678}
+    >>> {'methane': 1.2980602636892002, 'ethane': 0.3967781774811893, 'propane': 0.29602876757692975}
     
 ## Solving for partial vapor fugacities of compounds in mixture in range of pressures
     compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
     calculator = PendRob(compounds)
     df = calculator.generate_table_for_fv(pressures=[2, 7, 20], temperature=100, file='output.csv')
     print(df)
-    >>>     Pressure (bar)       Z  ...  Vapor Fugacity of ethane  Vapor Fugacity of propane
-    0               2  0.9954  ...                    0.4032                     0.3027
-    1               7  0.9840  ...                    1.4404                     1.0842
-    2              20  0.9543  ...                    4.3501                     3.2985
+    >>> Pressure (bar)  ...  Vapor Fugacity of propane (bar)
+    0               5  ...                           0.7254
+    1              15  ...                           2.0363
+    2              25  ...                           3.1765

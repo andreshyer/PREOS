@@ -364,7 +364,6 @@ class PendRob:
         """
 
         sum_yj_aij = 0
-        yi = self.compounds[compound_i]
         for compound_j, yj in self.compounds.items():
             k = self.__fetch_kij__(compound_i, compound_j)
             ai = self.a_data[compound_i]
