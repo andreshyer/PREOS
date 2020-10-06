@@ -18,13 +18,13 @@ if __name__ == '__main__':
     # print(calculator.z_mix)
     # print()
     #
-    # # Calculate molar volume of mixture
-    # compounds = {'ethane': 0.5, 'n-butane': 0.5}
-    # calculator = PendRob(compounds)
-    # calculator.calculate_V(pressure=2, temperature=100)
-    # print(compounds)
-    # print(calculator.V)
-    # print()
+    # Calculate molar volume of mixture
+    compounds = {'ethane': 0.5, 'n-butane': 0.5}
+    calculator = PendRob(compounds)
+    df = calculator.generate_table_for_fv(pressures=[1, 10, 15], temperature=100, file='output.csv')
+    print(compounds)
+    print(df)
+    print()
     #
     # # Calculate partial vapor fugacities of compounds in mixture
     # compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
@@ -35,8 +35,8 @@ if __name__ == '__main__':
     # print()
 
     # Generate df for range of fugacities
-    compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
-    calculator = PendRob(compounds)
-    df = calculator.generate_table_for_fv(pressures=[5, 15, 25], temperature=100, file='output.csv')
-    print(compounds)
-    print(df)
+    # compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
+    # calculator = PendRob(compounds)
+    # df = calculator.generate_table_for_fv(pressures=[5, 15, 25], temperature=100, file='output.csv')
+    # print(compounds)
+    # print(df)

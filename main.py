@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from math import log, sqrt, exp
+from sympy import solve, Symbol
 
 
 class PendRob:
@@ -77,9 +78,12 @@ class PendRob:
 
         # calculate a and b
         k = 0.37464 + 1.54226*w - 0.26992*(w**2)
-        alpha = (1 + k * (1 - sqrt(self.temperature/Tc)))**2
+        alpha = 1 - sqrt(self.temperature/Tc)
+        alpha = k * alpha
+        alpha = 1 + alpha
+        alpha = alpha**2
 
-        a = 0.45724 * alpha * (self.R*Tc)**2/Pc
+        a = 0.45724 * alpha * ((self.R*Tc)**2)/Pc
         b = 0.07780 * self.R*Tc/Pc
 
         return a, b
@@ -97,10 +101,9 @@ class PendRob:
             b_mix += y1 * self.b_data[compound]
             for sub_compound, y2 in self.compounds.items():
                 k = self.__fetch_kij__(compound, sub_compound)
-                print(compound, sub_compound, k)
                 a1 = self.a_data[compound]
                 a2 = self.a_data[sub_compound]
-                a_mix += (y1*y2) * (1-k) * sqrt(a1*a2)
+                a_mix = a_mix + (y1*y2) * (1-k) * sqrt(a1*a2)
         return a_mix, b_mix
 
     def __fetch_kij__(self, compound, sub_compound):
@@ -201,7 +204,7 @@ class PendRob:
         :return: A, B for PREOS
         """
 
-        A = (a * self.pressure) / ((self.R * self.temperature) ** 2)
+        A = (a * self.pressure) / ((self.R * self.temperature)**2)
         B = (b * self.pressure) / (self.R * self.temperature)
         return A, B
 
@@ -244,9 +247,15 @@ class PendRob:
         :return: Z root(s) as a dict, defining which state each Z is for
         """
 
-        roots = np.roots([1, u, v, w])
-        roots = roots[np.isreal(roots)]
-        roots = np.real(roots)
+        Z = Symbol("Z")
+        sympy_roots = solve(Z**3 + u*(Z**2) + w*Z + v)
+        roots = []
+        for root in sympy_roots:
+            try:
+                roots.append(float(root))
+            except TypeError:
+                pass
+        roots = np.array(roots)
         if len(roots) == 3:
             roots = roots[roots > 0]
             roots = {'vapor': max(roots), 'liquid': min(roots)}
@@ -300,25 +309,25 @@ class PendRob:
         z_mix = self.__pull_z_value__(self.z_mix, 'vapor')
 
         for compound, yi in self.compounds.items():
-            ai = self.a_data[compound]
             bi = self.b_data[compound]
-            Ai, Bi = self.__calculate_A_B__(ai, bi)
-            sum_yj_Aij = self.__calculate_sum_yj_Aij__(compound)
+            sum_yj_aij = self.__calculate_sum_yj_aij__(compound)
+            print(sum_yj_aij)
 
             try:
-                term1 = (Bi * (z_mix - 1)/self.B_mix)
-                term2 = log(z_mix - self.B_mix)
-                term3 = self.A_mix/(2 * sqrt(2) * self.B_mix)
-                term4 = (2*sum_yj_Aij/self.A_mix) - Bi/self.B_mix
+                term1 = (bi * (z_mix - 1)/self.b_mix)
+                term2 = log(z_mix - self.b_mix*self.pressure/(self.R * self.temperature))
+                term3 = self.a_mix/(2 * sqrt(2) * self.b_mix * self.R * self.temperature)
+                term4 = (2*sum_yj_aij/self.a_mix) - bi/self.b_mix
 
-                term5_1 = z_mix + ((1 + sqrt(2)) * self.B_mix)
-                term5_2 = z_mix + ((1 - sqrt(2)) * self.B_mix)
+                term5_1 = z_mix + ((1 + sqrt(2)) * self.b_mix*self.pressure/(self.R * self.temperature))
+                term5_2 = z_mix + ((1 - sqrt(2)) * self.b_mix*self.pressure/(self.R * self.temperature))
                 term5 = log(term5_1/term5_2)
 
                 fv = term1 - term2 - (term3 * term4 * term5)
                 fv = exp(fv)
                 fv = fv * yi * self.pressure * 10**(-5)
                 self.fv[compound] = fv
+
             except ValueError:
                 raise ValueError(f'Cannot calculate partial vapor fugacities of compounds at {self.temperature-273.15} '
                                  f'C and {self.pressure * 10**-5} Bar because mixture cannot exist as vapor at '
@@ -342,7 +351,7 @@ class PendRob:
             raise Exception(f"Phase {phase} not found in z dict")
         return z
 
-    def __calculate_sum_yj_Aij__(self, compound_i):
+    def __calculate_sum_yj_aij__(self, compound_i):
 
         """
         The equation used does not have a direct equation in the book. This variable is needed when
@@ -354,16 +363,15 @@ class PendRob:
         :return:
         """
 
-        sum_yj_Aij = 0
+        sum_yj_aij = 0
         yi = self.compounds[compound_i]
         for compound_j, yj in self.compounds.items():
             k = self.__fetch_kij__(compound_i, compound_j)
             ai = self.a_data[compound_i]
             aj = self.a_data[compound_j]
             aij = (yi*yj) * (1 - k) * sqrt(ai*aj)
-            Aij = aij*self.pressure/((self.R*self.temperature)**2)
-            sum_yj_Aij += yj*Aij
-        return sum_yj_Aij
+            sum_yj_aij += yj*aij
+        return sum_yj_aij
 
     def generate_table_for_fv(self, pressures, temperature, file=None):
         data = []
