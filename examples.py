@@ -37,6 +37,6 @@ if __name__ == '__main__':
     # Generate df for range of fugacities
     compounds = {'methane': 0.65, 'ethane': 0.20, 'propane': 0.15}
     calculator = PendRob(compounds)
-    df = calculator.generate_table_for_fv(pressures=[5, 15, 25], temperature=100, file='output.csv')
+    df = calculator.generate_table_for_fv(pressures=[2, 7, 20], temperature=100, file='output.csv')
     print(compounds)
     print(df)

@@ -45,6 +45,6 @@ the PREOS can easily do so.
     df = calculator.generate_table_for_fv(pressures=[2, 7, 20], temperature=100, file='output.csv')
     print(df)
     >>> Pressure (bar)  ...  Vapor Fugacity of propane (bar)
-    0               5  ...                           0.7254
-    1              15  ...                           2.0363
-    2              25  ...                           3.1765
+    0               2  ...                           0.2960
+    1               7  ...                           1.0022
+    2              20  ...                           2.6266
