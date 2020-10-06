@@ -311,7 +311,7 @@ class PendRob:
         for compound, yi in self.compounds.items():
             bi = self.b_data[compound]
             sum_yj_aij = self.__calculate_sum_yj_aij__(compound)
-            print(sum_yj_aij)
+            # print(sum_yj_aij)
 
             try:
                 term1 = (bi * (z_mix - 1)/self.b_mix)
@@ -369,7 +369,7 @@ class PendRob:
             k = self.__fetch_kij__(compound_i, compound_j)
             ai = self.a_data[compound_i]
             aj = self.a_data[compound_j]
-            aij = (yi*yj) * (1 - k) * sqrt(ai*aj)
+            aij = (1 - k) * sqrt(ai*aj)
             sum_yj_aij += yj*aij
         return sum_yj_aij
 
