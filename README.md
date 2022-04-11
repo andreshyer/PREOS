@@ -7,10 +7,6 @@ and Engineering Thermodynamics" by Stanley I. Sandler.
 This solver can also solve the Z and molar volumes of a mixture both in vapor 
 and liquid phase. 
 
-This script was made for a project in CLSE 305 at VCU, if someone in the future finds
-this script, please do not copy it. This was put on GitHub so anyone wanting to use
-the PREOS can easily do so.
-
 ## Solving for Z of a single component
     compounds = {'oxygen': 1.0}
     calculator = PendRob(compounds)
